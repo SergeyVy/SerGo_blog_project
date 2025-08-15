@@ -1,15 +1,20 @@
-package main // важно: не package cmd
+package main
 
 import (
 	"log"
+	"os"
 
-	"my-notes-app/server" // имя должно совпасть с module в go.mod
+	"my-notes-app/server"
 )
 
 func main() {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
 	srv := server.New()
-	log.Println("starting server on port 8080")
-	if err := srv.Run(":8080"); err != nil {
+	log.Println("starting server on port", port)
+	if err := srv.Run(":" + port); err != nil {
 		log.Fatal(err)
 	}
 }
