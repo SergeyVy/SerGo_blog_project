@@ -1,22 +1,34 @@
-package server //создаёт Gin Router, вешает middleware (логирование), регистрирует ручки.
+package server
 
-import "net/http"
+import (
+	"net/http"
+	"strings"
+
+	"my-notes-app/internal/handlers"
+)
 
 type Server struct {
 	mux *http.ServeMux
 }
 
-func New() *Server {
-	s := &Server{
-		mux: http.NewServeMux(),
-	}
+func New(h *handlers.Handler) *Server {
+	mux := http.NewServeMux()
 
-	s.mux.HandleFunc("/ping", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
+	mux.HandleFunc("/ping", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(`{"message":"pong"}`))
 	})
-	return s
+
+	mux.HandleFunc("/users", h.RegisterUser)
+	mux.HandleFunc("/users/", func(w http.ResponseWriter, r *http.Request) {
+		path := strings.TrimPrefix(r.URL.Path, "/users/")
+		if strings.Count(path, "/") == 1 {
+			h.NotesHandler(w, r)
+		} else {
+			h.NoteByIDHandler(w, r)
+		}
+	})
+
+	return &Server{mux: mux}
 }
 
 func (s *Server) Run(addr string) error {

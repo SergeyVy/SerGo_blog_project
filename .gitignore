@@ -1,0 +1,19 @@
+# IDE
+.idea/
+*.iml
+
+# OS
+.DS_Store
+
+# Build artifacts
+/main
+*.exe
+
+# Logs
+*.log
+
+# Configs
+config.yaml
+
+# Vendor (если будешь использовать)
+vendor/

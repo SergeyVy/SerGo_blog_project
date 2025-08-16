@@ -1,0 +1,3 @@
+env: "prod"
+database_url: "postgresql://notes_app_elbl_user:7YPNz4S7OqHljKZoc6j9GzW5NTg1ee89@dpg-d2fhkrbe5dus73aoq070-a.oregon-postgres.render.com/notes_app_elbl"
+jwt_secret: "my_super_secret_key"

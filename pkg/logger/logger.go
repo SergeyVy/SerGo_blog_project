@@ -1,1 +1,11 @@
-package logger // логирование  наш логгер, чтобы писать события в консоль.
+package logger
+
+import (
+	"log"
+	"os"
+)
+
+func Init() {
+	log.SetOutput(os.Stdout)
+	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)
+}

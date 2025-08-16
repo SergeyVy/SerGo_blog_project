@@ -1,0 +1,20 @@
+# Goland stuff
+.idea
+*.iml
+
+# OS junk
+.DS_Store
+
+# Git
+.git
+.gitignore
+
+# Binaries
+main
+*.exe
+
+# Logs
+*.log
+
+# Configs
+config.yaml
