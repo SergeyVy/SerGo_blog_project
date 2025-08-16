@@ -2,7 +2,6 @@ package config
 
 import (
 	"gopkg.in/yaml.v3"
-	_ "gopkg.in/yaml.v3"
 	"log"
 	"os"
 )
@@ -26,7 +25,13 @@ func MustLoad() *Config {
 
 	var cfg Config
 	if err = yaml.Unmarshal(data, &cfg); err != nil {
-		log.Fatalf("не удалосьраспарсить конфиг: %v", err)
+		log.Fatalf("не удалось распарсить конфиг: %v", err)
 	}
+
+	// ⬇️ Переопределение из переменных окружения, если есть
+	if envJWT := os.Getenv("JWT_SECRET"); envJWT != "" {
+		cfg.JWTSecret = envJWT
+	}
+
 	return &cfg
 }
